@@ -1,0 +1,2343 @@
+{
+  "name": "Sistema Info Carreras - Flujo Principal",
+  "nodes": [
+    {
+      "parameters": {
+        "pollTimes": {
+          "item": [
+            {
+              "hour": 20
+            }
+          ]
+        },
+        "documentId": {
+          "__rl": true,
+          "value": "1a1W-tUwrznkWm07A-hvr7L3_hYpcVBs9XLie4WAMYnU",
+          "mode": "list",
+          "cachedResultName": "Formulario info carreras ",
+          "cachedResultUrl": "https://docs.google.com/spreadsheets/d/1a1W-tUwrznkWm07A-hvr7L3_hYpcVBs9XLie4WAMYnU/edit?usp=drivesdk"
+        },
+        "sheetName": {
+          "__rl": true,
+          "value": 1800389903,
+          "mode": "list",
+          "cachedResultName": "Respuestas de formulario 1",
+          "cachedResultUrl": "https://docs.google.com/spreadsheets/d/1a1W-tUwrznkWm07A-hvr7L3_hYpcVBs9XLie4WAMYnU/edit#gid=1800389903"
+        },
+        "event": "rowAdded",
+        "options": {}
+      },
+      "type": "n8n-nodes-base.googleSheetsTrigger",
+      "typeVersion": 1,
+      "position": [
+        0,
+        0
+      ],
+      "id": "05336142-34b7-476b-9a20-f55cf0f0d818",
+      "name": "Google Sheets Trigger",
+      "credentials": {
+        "googleSheetsTriggerOAuth2Api": {
+          "id": "KDKODVgMXSiMqMqL",
+          "name": "Google Sheets Trigger account"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "conditions": {
+          "options": {
+            "caseSensitive": true,
+            "leftValue": "",
+            "typeValidation": "strict",
+            "version": 3
+          },
+          "conditions": [
+            {
+              "id": "bd3a2386-f8e7-4234-99b5-7041a90a51a5",
+              "leftValue": "={{ $json.nombre }}",
+              "rightValue": "",
+              "operator": {
+                "type": "string",
+                "operation": "notEmpty",
+                "singleValue": true
+              }
+            },
+            {
+              "id": "8f397fad-d46d-4863-908b-6be329f579e6",
+              "leftValue": "={{ $json.email }}",
+              "rightValue": "",
+              "operator": {
+                "type": "string",
+                "operation": "notEmpty",
+                "singleValue": true
+              }
+            },
+            {
+              "id": "614ab791-745b-4c30-ba6c-d2afeddf0592",
+              "leftValue": "={{ $json.carrera_nombre }}",
+              "rightValue": "",
+              "operator": {
+                "type": "string",
+                "operation": "notEmpty",
+                "singleValue": true
+              }
+            },
+            {
+              "id": "1aa96679-6b99-409d-9a32-8bb648ae798a",
+              "leftValue": "",
+              "rightValue": "",
+              "operator": {
+                "type": "string",
+                "operation": "equals",
+                "name": "filter.operator.equals"
+              }
+            }
+          ],
+          "combinator": "and"
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.if",
+      "typeVersion": 2.3,
+      "position": [
+        448,
+        0
+      ],
+      "id": "02ef7ea6-9410-46cf-af69-be9f77073548",
+      "name": "If"
+    },
+    {
+      "parameters": {
+        "conditions": {
+          "options": {
+            "caseSensitive": true,
+            "leftValue": "",
+            "typeValidation": "strict",
+            "version": 3
+          },
+          "conditions": [
+            {
+              "id": "51684107-b445-4e6d-880e-c11525ea79ac",
+              "leftValue": "={{ $json.id }}",
+              "rightValue": "",
+              "operator": {
+                "type": "string",
+                "operation": "notEmpty",
+                "singleValue": true
+              }
+            }
+          ],
+          "combinator": "and"
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.if",
+      "typeVersion": 2.3,
+      "position": [
+        896,
+        -96
+      ],
+      "id": "fb17612a-c82b-4164-86d2-4daf2ebc32cd",
+      "name": "If1"
+    },
+    {
+      "parameters": {
+        "assignments": {
+          "assignments": [
+            {
+              "id": "53541ca7-ce7d-43ad-9ed4-3266ac6d41dc",
+              "name": "nombre",
+              "value": "={{ $json[\"Nombre :\"].trim() }}",
+              "type": "string"
+            },
+            {
+              "id": "5236732a-c1e7-4442-b107-5849c0b2867e",
+              "name": "email",
+              "value": "={{ $json[\"Correo:\"].trim() }}",
+              "type": "string"
+            },
+            {
+              "id": "6d733de9-563b-4884-a336-a8ae1d007832",
+              "name": "celular",
+              "value": "={{ $json['Celular:'] }}",
+              "type": "string"
+            },
+            {
+              "id": "02577e1d-55f4-4fb1-a0ca-9afdace1cc18",
+              "name": "carrera_nombre",
+              "value": "={{ $json[\"Selecciona la carrera sobre la cual deseas recibir más información:\"].trim().replace(/\\.$/, '') }}",
+              "type": "string"
+            },
+            {
+              "id": "7b55f72b-2e3f-47d9-91ca-e1d41b21255d",
+              "name": "consulta",
+              "value": "={{ $json[\"¿Deseas consultar algo en particular?\"] }}",
+              "type": "string"
+            }
+          ]
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.set",
+      "typeVersion": 3.5,
+      "position": [
+        224,
+        0
+      ],
+      "id": "776c0058-6471-41d0-8379-5c5b98d8453c",
+      "name": "Normalizar datos"
+    },
+    {
+      "parameters": {
+        "authentication": "airtableOAuth2Api",
+        "operation": "search",
+        "base": {
+          "__rl": true,
+          "value": "appFV3yWXdbnGtFol",
+          "mode": "list",
+          "cachedResultName": "Sistema Info Carreras",
+          "cachedResultUrl": "https://airtable.com/appFV3yWXdbnGtFol"
+        },
+        "table": {
+          "__rl": true,
+          "value": "tblNL7AOp65cQoANK",
+          "mode": "list",
+          "cachedResultName": "Carreras",
+          "cachedResultUrl": "https://airtable.com/appFV3yWXdbnGtFol/tblNL7AOp65cQoANK"
+        },
+        "filterByFormula": "={Nombre} = \"{{ $json.carrera_nombre }}\"",
+        "returnAll": false,
+        "options": {}
+      },
+      "type": "n8n-nodes-base.airtable",
+      "typeVersion": 2.2,
+      "position": [
+        672,
+        -96
+      ],
+      "id": "944cd0c5-8c8d-40cf-84b6-3303d7976d4e",
+      "name": "Buscar Carrera",
+      "credentials": {
+        "airtableOAuth2Api": {
+          "id": "0vTgEBN0LH1B8Abm",
+          "name": "Airtable account"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "authentication": "airtableOAuth2Api",
+        "operation": "create",
+        "base": {
+          "__rl": true,
+          "value": "appFV3yWXdbnGtFol",
+          "mode": "list",
+          "cachedResultName": "Sistema Info Carreras",
+          "cachedResultUrl": "https://airtable.com/appFV3yWXdbnGtFol"
+        },
+        "table": {
+          "__rl": true,
+          "value": "tblclqDTUXJ7KiJFC",
+          "mode": "list",
+          "cachedResultName": "Solicitudes",
+          "cachedResultUrl": "https://airtable.com/appFV3yWXdbnGtFol/tblclqDTUXJ7KiJFC"
+        },
+        "columns": {
+          "mappingMode": "defineBelow",
+          "value": {
+            "Nombre_Estudiante": "={{ $('Normalizar datos').item.json.nombre }}",
+            "Email_Estudiante": "={{ $('Normalizar datos').item.json.email }}",
+            "Carrera": "={{ [$json.id] }}",
+            "Estado": "Pendiente"
+          },
+          "matchingColumns": [],
+          "schema": [
+            {
+              "id": "Solicitud_ID",
+              "displayName": "Solicitud_ID",
+              "required": false,
+              "defaultMatch": false,
+              "canBeUsedToMatch": true,
+              "display": true,
+              "type": "string",
+              "readOnly": true,
+              "removed": true
+            },
+            {
+              "id": "Nombre_Estudiante",
+              "displayName": "Nombre_Estudiante",
+              "required": false,
+              "defaultMatch": false,
+              "canBeUsedToMatch": true,
+              "display": true,
+              "type": "string",
+              "readOnly": false,
+              "removed": false
+            },
+            {
+              "id": "Email_Estudiante",
+              "displayName": "Email_Estudiante",
+              "required": false,
+              "defaultMatch": false,
+              "canBeUsedToMatch": true,
+              "display": true,
+              "type": "string",
+              "readOnly": false,
+              "removed": false
+            },
+            {
+              "id": "Carrera",
+              "displayName": "Carrera",
+              "required": false,
+              "defaultMatch": false,
+              "canBeUsedToMatch": true,
+              "display": true,
+              "type": "array",
+              "readOnly": false,
+              "removed": false
+            },
+            {
+              "id": "Pregunta",
+              "displayName": "Pregunta",
+              "required": false,
+              "defaultMatch": false,
+              "canBeUsedToMatch": true,
+              "display": true,
+              "type": "string",
+              "readOnly": false,
+              "removed": false
+            },
+            {
+              "id": "Estado",
+              "displayName": "Estado",
+              "required": false,
+              "defaultMatch": false,
+              "canBeUsedToMatch": true,
+              "display": true,
+              "type": "options",
+              "options": [
+                {
+                  "name": "Pendiente",
+                  "value": "Pendiente"
+                },
+                {
+                  "name": "Procesado por IA",
+                  "value": "Procesado por IA"
+                },
+                {
+                  "name": "Esperando Aprobación",
+                  "value": "Esperando Aprobación"
+                },
+                {
+                  "name": "Aprobado",
+                  "value": "Aprobado"
+                },
+                {
+                  "name": "Rechazado",
+                  "value": "Rechazado"
+                },
+                {
+                  "name": "Enviado",
+                  "value": "Enviado"
+                },
+                {
+                  "name": "Error",
+                  "value": "Error"
+                },
+                {
+                  "name": "Respondida",
+                  "value": "Respondida"
+                }
+              ],
+              "readOnly": false,
+              "removed": false
+            },
+            {
+              "id": "Respuesta_IA",
+              "displayName": "Respuesta_IA",
+              "required": false,
+              "defaultMatch": false,
+              "canBeUsedToMatch": true,
+              "display": true,
+              "type": "string",
+              "readOnly": false,
+              "removed": false
+            },
+            {
+              "id": "Aprobado_Por",
+              "displayName": "Aprobado_Por",
+              "required": false,
+              "defaultMatch": false,
+              "canBeUsedToMatch": true,
+              "display": true,
+              "type": "string",
+              "readOnly": false,
+              "removed": false
+            },
+            {
+              "id": "Fecha_Solicitud",
+              "displayName": "Fecha_Solicitud",
+              "required": false,
+              "defaultMatch": false,
+              "canBeUsedToMatch": true,
+              "display": true,
+              "type": "string",
+              "readOnly": true,
+              "removed": true
+            },
+            {
+              "id": "Fecha_Envio",
+              "displayName": "Fecha_Envio",
+              "required": false,
+              "defaultMatch": false,
+              "canBeUsedToMatch": true,
+              "display": true,
+              "type": "dateTime",
+              "readOnly": false,
+              "removed": false
+            },
+            {
+              "id": "Errores relacionados",
+              "displayName": "Errores relacionados",
+              "required": false,
+              "defaultMatch": false,
+              "canBeUsedToMatch": true,
+              "display": true,
+              "type": "array",
+              "readOnly": false,
+              "removed": false
+            }
+          ],
+          "attemptToConvertTypes": false,
+          "convertFieldsToString": false
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.airtable",
+      "typeVersion": 2.2,
+      "position": [
+        1120,
+        -192
+      ],
+      "id": "9aa52f3e-0915-4c7a-95fa-697a672490a3",
+      "name": "Crear Solicitud",
+      "credentials": {
+        "airtableOAuth2Api": {
+          "id": "0vTgEBN0LH1B8Abm",
+          "name": "Airtable account"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "authentication": "airtableOAuth2Api",
+        "operation": "create",
+        "base": {
+          "__rl": true,
+          "value": "appFV3yWXdbnGtFol",
+          "mode": "list",
+          "cachedResultName": "Sistema Info Carreras",
+          "cachedResultUrl": "https://airtable.com/appFV3yWXdbnGtFol"
+        },
+        "table": {
+          "__rl": true,
+          "value": "tblssp4DOtefeJNBM",
+          "mode": "list",
+          "cachedResultName": "Errores",
+          "cachedResultUrl": "https://airtable.com/appFV3yWXdbnGtFol/tblssp4DOtefeJNBM"
+        },
+        "columns": {
+          "mappingMode": "defineBelow",
+          "value": {
+            "Tipo_Error": "Carrera no encontrada",
+            "Mensaje": "=  {{ \"Carrera no encontrada en la base de datos. Carrera solicitada: \" + $('Normalizar datos').item.json.carrera_nombre + \" | Estudiante: \" + $('Normalizar datos').item.json.nombre + \" | Email: \" + $('Normalizar datos').item.json.email }}"
+          },
+          "matchingColumns": [],
+          "schema": [
+            {
+              "id": "Error_ID",
+              "displayName": "Error_ID",
+              "required": false,
+              "defaultMatch": false,
+              "canBeUsedToMatch": true,
+              "display": true,
+              "type": "string",
+              "readOnly": true,
+              "removed": true
+            },
+            {
+              "id": "Solicitud",
+              "displayName": "Solicitud",
+              "required": false,
+              "defaultMatch": false,
+              "canBeUsedToMatch": true,
+              "display": true,
+              "type": "array",
+              "readOnly": false,
+              "removed": false
+            },
+            {
+              "id": "Tipo_Error",
+              "displayName": "Tipo_Error",
+              "required": false,
+              "defaultMatch": false,
+              "canBeUsedToMatch": true,
+              "display": true,
+              "type": "options",
+              "options": [
+                {
+                  "name": "Datos faltantes",
+                  "value": "Datos faltantes"
+                },
+                {
+                  "name": "Carrera no encontrada",
+                  "value": "Carrera no encontrada"
+                },
+                {
+                  "name": "Falla API IA",
+                  "value": "Falla API IA"
+                },
+                {
+                  "name": "Falla envío Gmail",
+                  "value": "Falla envío Gmail"
+                },
+                {
+                  "name": "Validación",
+                  "value": "Validación"
+                },
+                {
+                  "name": "Autenticación",
+                  "value": "Autenticación"
+                },
+                {
+                  "name": "Base de datos",
+                  "value": "Base de datos"
+                },
+                {
+                  "name": "Permisos",
+                  "value": "Permisos"
+                },
+                {
+                  "name": "Red",
+                  "value": "Red"
+                }
+              ],
+              "readOnly": false,
+              "removed": false
+            },
+            {
+              "id": "Mensaje",
+              "displayName": "Mensaje",
+              "required": false,
+              "defaultMatch": false,
+              "canBeUsedToMatch": true,
+              "display": true,
+              "type": "string",
+              "readOnly": false,
+              "removed": false
+            },
+            {
+              "id": "Fecha",
+              "displayName": "Fecha",
+              "required": false,
+              "defaultMatch": false,
+              "canBeUsedToMatch": true,
+              "display": true,
+              "type": "string",
+              "readOnly": true,
+              "removed": true
+            }
+          ],
+          "attemptToConvertTypes": false,
+          "convertFieldsToString": false
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.airtable",
+      "typeVersion": 2.2,
+      "position": [
+        1120,
+        0
+      ],
+      "id": "ac26ef98-dc8c-4559-8473-771d0740ba47",
+      "name": "Registrar Error",
+      "credentials": {
+        "airtableOAuth2Api": {
+          "id": "0vTgEBN0LH1B8Abm",
+          "name": "Airtable account"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "authentication": "airtableOAuth2Api",
+        "operation": "create",
+        "base": {
+          "__rl": true,
+          "value": "appFV3yWXdbnGtFol",
+          "mode": "list",
+          "cachedResultName": "Sistema Info Carreras",
+          "cachedResultUrl": "https://airtable.com/appFV3yWXdbnGtFol"
+        },
+        "table": {
+          "__rl": true,
+          "value": "tblssp4DOtefeJNBM",
+          "mode": "list",
+          "cachedResultName": "Errores",
+          "cachedResultUrl": "https://airtable.com/appFV3yWXdbnGtFol/tblssp4DOtefeJNBM"
+        },
+        "columns": {
+          "mappingMode": "defineBelow",
+          "value": {
+            "Tipo_Error": "Datos faltantes",
+            "Mensaje": "={{ \"Solicitud incompleta. Nombre: \" + $json.nombre + \" | Email: \" + $json.email + \" | Carrera: \" + $json.carrera_nombre }}"
+          },
+          "matchingColumns": [],
+          "schema": [
+            {
+              "id": "Error_ID",
+              "displayName": "Error_ID",
+              "required": false,
+              "defaultMatch": false,
+              "canBeUsedToMatch": true,
+              "display": true,
+              "type": "string",
+              "readOnly": true,
+              "removed": true
+            },
+            {
+              "id": "Solicitud",
+              "displayName": "Solicitud",
+              "required": false,
+              "defaultMatch": false,
+              "canBeUsedToMatch": true,
+              "display": true,
+              "type": "array",
+              "readOnly": false,
+              "removed": true
+            },
+            {
+              "id": "Tipo_Error",
+              "displayName": "Tipo_Error",
+              "required": false,
+              "defaultMatch": false,
+              "canBeUsedToMatch": true,
+              "display": true,
+              "type": "options",
+              "options": [
+                {
+                  "name": "Datos faltantes",
+                  "value": "Datos faltantes"
+                },
+                {
+                  "name": "Carrera no encontrada",
+                  "value": "Carrera no encontrada"
+                },
+                {
+                  "name": "Falla API IA",
+                  "value": "Falla API IA"
+                },
+                {
+                  "name": "Falla envío Gmail",
+                  "value": "Falla envío Gmail"
+                },
+                {
+                  "name": "Validación",
+                  "value": "Validación"
+                },
+                {
+                  "name": "Autenticación",
+                  "value": "Autenticación"
+                },
+                {
+                  "name": "Base de datos",
+                  "value": "Base de datos"
+                },
+                {
+                  "name": "Permisos",
+                  "value": "Permisos"
+                },
+                {
+                  "name": "Red",
+                  "value": "Red"
+                }
+              ],
+              "readOnly": false,
+              "removed": false
+            },
+            {
+              "id": "Mensaje",
+              "displayName": "Mensaje",
+              "required": false,
+              "defaultMatch": false,
+              "canBeUsedToMatch": true,
+              "display": true,
+              "type": "string",
+              "readOnly": false,
+              "removed": false
+            },
+            {
+              "id": "Fecha",
+              "displayName": "Fecha",
+              "required": false,
+              "defaultMatch": false,
+              "canBeUsedToMatch": true,
+              "display": true,
+              "type": "string",
+              "readOnly": true,
+              "removed": true
+            }
+          ],
+          "attemptToConvertTypes": false,
+          "convertFieldsToString": false
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.airtable",
+      "typeVersion": 2.2,
+      "position": [
+        672,
+        96
+      ],
+      "id": "ad6e681d-91a9-4af8-8f9d-8e886033b1e8",
+      "name": "Revisar Error Datos",
+      "credentials": {
+        "airtableOAuth2Api": {
+          "id": "0vTgEBN0LH1B8Abm",
+          "name": "Airtable account"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "operation": "sendAndWait",
+        "sendTo": "isipp1206.info@gmail.com",
+        "subject": "=   Aprobación requerida: respuesta para {{ $('Normalizar datos').item.json.nombre }}",
+        "message": "=    El estudiante {{ $('Normalizar datos').item.json.nombre }} preguntó lo siguiente sobre la carrera {{ $('Buscar Carrera').item.json.fields.Nombre }}:\n\n\"{{ $('Normalizar datos').item.json.consulta }}\"\n\nEl correo informativo general ya fue generado por la IA y se va a enviar de todas formas. Escribí ABAJO solo la respuesta puntual a la consulta del estudiante — se va a agregar como párrafo final al correo.",
+        "responseType": "freeText",
+        "options": {}
+      },
+      "type": "n8n-nodes-base.gmail",
+      "typeVersion": 2.2,
+      "position": [
+        2144,
+        -352
+      ],
+      "id": "4e9b43f2-9101-41eb-b4db-2d8819058a6f",
+      "name": "Aprobacion Asesor",
+      "webhookId": "1dd374e0-9912-4af7-8266-49dc3c9ec486",
+      "credentials": {
+        "gmailOAuth2": {
+          "id": "OFHDkv7brEmN6Kte",
+          "name": "Gmail account"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "conditions": {
+          "options": {
+            "caseSensitive": true,
+            "leftValue": "",
+            "typeValidation": "strict",
+            "version": 3
+          },
+          "conditions": [
+            {
+              "id": "8d9e4eba-60f9-4e9d-b80a-38845aede6cb",
+              "leftValue": "={{ $('Normalizar datos').item.json.consulta }}",
+              "rightValue": "",
+              "operator": {
+                "type": "string",
+                "operation": "notEmpty",
+                "singleValue": true
+              }
+            }
+          ],
+          "combinator": "and"
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.if",
+      "typeVersion": 2.3,
+      "position": [
+        1920,
+        -160
+      ],
+      "id": "309f8c40-a27a-472b-8382-9e928fba77f9",
+      "name": "¿Requiere Revisión Humana?"
+    },
+    {
+      "parameters": {
+        "authentication": "airtableOAuth2Api",
+        "operation": "update",
+        "base": {
+          "__rl": true,
+          "value": "appFV3yWXdbnGtFol",
+          "mode": "list",
+          "cachedResultName": "Sistema Info Carreras",
+          "cachedResultUrl": "https://airtable.com/appFV3yWXdbnGtFol"
+        },
+        "table": {
+          "__rl": true,
+          "value": "tblclqDTUXJ7KiJFC",
+          "mode": "list",
+          "cachedResultName": "Solicitudes",
+          "cachedResultUrl": "https://airtable.com/appFV3yWXdbnGtFol/tblclqDTUXJ7KiJFC"
+        },
+        "columns": {
+          "mappingMode": "defineBelow",
+          "value": {
+            "id": "={{ $('Crear Solicitud').item.json.id }}",
+            "Estado": "Procesado por IA",
+            "Respuesta_IA": "={{ $('Generar Respuesta IA').item.json.content.parts[0].text }}"
+          },
+          "matchingColumns": [
+            "id"
+          ],
+          "schema": [
+            {
+              "id": "id",
+              "displayName": "id",
+              "required": false,
+              "defaultMatch": true,
+              "display": true,
+              "type": "string",
+              "readOnly": true,
+              "removed": false
+            },
+            {
+              "id": "Solicitud_ID",
+              "displayName": "Solicitud_ID",
+              "required": false,
+              "defaultMatch": false,
+              "canBeUsedToMatch": true,
+              "display": true,
+              "type": "string",
+              "readOnly": true,
+              "removed": true
+            },
+            {
+              "id": "Nombre_Estudiante",
+              "displayName": "Nombre_Estudiante",
+              "required": false,
+              "defaultMatch": false,
+              "canBeUsedToMatch": true,
+              "display": true,
+              "type": "string",
+              "readOnly": false,
+              "removed": false
+            },
+            {
+              "id": "Email_Estudiante",
+              "displayName": "Email_Estudiante",
+              "required": false,
+              "defaultMatch": false,
+              "canBeUsedToMatch": true,
+              "display": true,
+              "type": "string",
+              "readOnly": false,
+              "removed": false
+            },
+            {
+              "id": "Carrera",
+              "displayName": "Carrera",
+              "required": false,
+              "defaultMatch": false,
+              "canBeUsedToMatch": true,
+              "display": true,
+              "type": "array",
+              "readOnly": false,
+              "removed": false
+            },
+            {
+              "id": "Pregunta",
+              "displayName": "Pregunta",
+              "required": false,
+              "defaultMatch": false,
+              "canBeUsedToMatch": true,
+              "display": true,
+              "type": "string",
+              "readOnly": false,
+              "removed": false
+            },
+            {
+              "id": "Estado",
+              "displayName": "Estado",
+              "required": false,
+              "defaultMatch": false,
+              "canBeUsedToMatch": true,
+              "display": true,
+              "type": "options",
+              "options": [
+                {
+                  "name": "Pendiente",
+                  "value": "Pendiente"
+                },
+                {
+                  "name": "Procesado por IA",
+                  "value": "Procesado por IA"
+                },
+                {
+                  "name": "Esperando Aprobación",
+                  "value": "Esperando Aprobación"
+                },
+                {
+                  "name": "Aprobado",
+                  "value": "Aprobado"
+                },
+                {
+                  "name": "Rechazado",
+                  "value": "Rechazado"
+                },
+                {
+                  "name": "Enviado",
+                  "value": "Enviado"
+                },
+                {
+                  "name": "Error",
+                  "value": "Error"
+                },
+                {
+                  "name": "Respondida",
+                  "value": "Respondida"
+                }
+              ],
+              "readOnly": false,
+              "removed": false
+            },
+            {
+              "id": "Respuesta_IA",
+              "displayName": "Respuesta_IA",
+              "required": false,
+              "defaultMatch": false,
+              "canBeUsedToMatch": true,
+              "display": true,
+              "type": "string",
+              "readOnly": false,
+              "removed": false
+            },
+            {
+              "id": "Aprobado_Por",
+              "displayName": "Aprobado_Por",
+              "required": false,
+              "defaultMatch": false,
+              "canBeUsedToMatch": true,
+              "display": true,
+              "type": "string",
+              "readOnly": false,
+              "removed": false
+            },
+            {
+              "id": "Fecha_Solicitud",
+              "displayName": "Fecha_Solicitud",
+              "required": false,
+              "defaultMatch": false,
+              "canBeUsedToMatch": true,
+              "display": true,
+              "type": "string",
+              "readOnly": true,
+              "removed": true
+            },
+            {
+              "id": "Fecha_Envio",
+              "displayName": "Fecha_Envio",
+              "required": false,
+              "defaultMatch": false,
+              "canBeUsedToMatch": true,
+              "display": true,
+              "type": "dateTime",
+              "readOnly": false,
+              "removed": false
+            },
+            {
+              "id": "Errores relacionados",
+              "displayName": "Errores relacionados",
+              "required": false,
+              "defaultMatch": false,
+              "canBeUsedToMatch": true,
+              "display": true,
+              "type": "array",
+              "readOnly": false,
+              "removed": false
+            },
+            {
+              "id": "Consulta",
+              "displayName": "Consulta",
+              "required": false,
+              "defaultMatch": false,
+              "canBeUsedToMatch": true,
+              "display": true,
+              "type": "string",
+              "readOnly": false,
+              "removed": false
+            }
+          ],
+          "attemptToConvertTypes": false,
+          "convertFieldsToString": false
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.airtable",
+      "typeVersion": 2.2,
+      "position": [
+        1696,
+        -272
+      ],
+      "id": "300eadc1-c582-4fe8-9dcd-586206f59755",
+      "name": "Actualizar Solicitud con IA",
+      "credentials": {
+        "airtableOAuth2Api": {
+          "id": "0vTgEBN0LH1B8Abm",
+          "name": "Airtable account"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "authentication": "airtableOAuth2Api",
+        "operation": "update",
+        "base": {
+          "__rl": true,
+          "value": "appFV3yWXdbnGtFol",
+          "mode": "list",
+          "cachedResultName": "Sistema Info Carreras",
+          "cachedResultUrl": "https://airtable.com/appFV3yWXdbnGtFol"
+        },
+        "table": {
+          "__rl": true,
+          "value": "tblclqDTUXJ7KiJFC",
+          "mode": "list",
+          "cachedResultName": "Solicitudes",
+          "cachedResultUrl": "https://airtable.com/appFV3yWXdbnGtFol/tblclqDTUXJ7KiJFC"
+        },
+        "columns": {
+          "mappingMode": "defineBelow",
+          "value": {
+            "Respuesta_Final": "={{ $('Generar Respuesta IA').item.json.content.parts[0].text + \"\\n\\nSobre tu consulta puntual: \" + $json.data.text }}",
+            "Estado": "Aprobado",
+            "id": "={{ $('Crear Solicitud').item.json.id }}"
+          },
+          "matchingColumns": [
+            "id"
+          ],
+          "schema": [
+            {
+              "id": "id",
+              "displayName": "id",
+              "required": false,
+              "defaultMatch": true,
+              "display": true,
+              "type": "string",
+              "readOnly": true,
+              "removed": false
+            },
+            {
+              "id": "Solicitud_ID",
+              "displayName": "Solicitud_ID",
+              "required": false,
+              "defaultMatch": false,
+              "canBeUsedToMatch": true,
+              "display": true,
+              "type": "string",
+              "readOnly": true,
+              "removed": true
+            },
+            {
+              "id": "Nombre_Estudiante",
+              "displayName": "Nombre_Estudiante",
+              "required": false,
+              "defaultMatch": false,
+              "canBeUsedToMatch": true,
+              "display": true,
+              "type": "string",
+              "readOnly": false,
+              "removed": false
+            },
+            {
+              "id": "Email_Estudiante",
+              "displayName": "Email_Estudiante",
+              "required": false,
+              "defaultMatch": false,
+              "canBeUsedToMatch": true,
+              "display": true,
+              "type": "string",
+              "readOnly": false,
+              "removed": false
+            },
+            {
+              "id": "Carrera",
+              "displayName": "Carrera",
+              "required": false,
+              "defaultMatch": false,
+              "canBeUsedToMatch": true,
+              "display": true,
+              "type": "array",
+              "readOnly": false,
+              "removed": false
+            },
+            {
+              "id": "Pregunta",
+              "displayName": "Pregunta",
+              "required": false,
+              "defaultMatch": false,
+              "canBeUsedToMatch": true,
+              "display": true,
+              "type": "string",
+              "readOnly": false,
+              "removed": false
+            },
+            {
+              "id": "Estado",
+              "displayName": "Estado",
+              "required": false,
+              "defaultMatch": false,
+              "canBeUsedToMatch": true,
+              "display": true,
+              "type": "options",
+              "options": [
+                {
+                  "name": "Pendiente",
+                  "value": "Pendiente"
+                },
+                {
+                  "name": "Procesado por IA",
+                  "value": "Procesado por IA"
+                },
+                {
+                  "name": "Esperando Aprobación",
+                  "value": "Esperando Aprobación"
+                },
+                {
+                  "name": "Aprobado",
+                  "value": "Aprobado"
+                },
+                {
+                  "name": "Rechazado",
+                  "value": "Rechazado"
+                },
+                {
+                  "name": "Enviado",
+                  "value": "Enviado"
+                },
+                {
+                  "name": "Error",
+                  "value": "Error"
+                },
+                {
+                  "name": "Respondida",
+                  "value": "Respondida"
+                }
+              ],
+              "readOnly": false,
+              "removed": false
+            },
+            {
+              "id": "Respuesta_IA",
+              "displayName": "Respuesta_IA",
+              "required": false,
+              "defaultMatch": false,
+              "canBeUsedToMatch": true,
+              "display": true,
+              "type": "string",
+              "readOnly": false,
+              "removed": false
+            },
+            {
+              "id": "Aprobado_Por",
+              "displayName": "Aprobado_Por",
+              "required": false,
+              "defaultMatch": false,
+              "canBeUsedToMatch": true,
+              "display": true,
+              "type": "string",
+              "readOnly": false,
+              "removed": false
+            },
+            {
+              "id": "Fecha_Solicitud",
+              "displayName": "Fecha_Solicitud",
+              "required": false,
+              "defaultMatch": false,
+              "canBeUsedToMatch": true,
+              "display": true,
+              "type": "string",
+              "readOnly": true,
+              "removed": true
+            },
+            {
+              "id": "Fecha_Envio",
+              "displayName": "Fecha_Envio",
+              "required": false,
+              "defaultMatch": false,
+              "canBeUsedToMatch": true,
+              "display": true,
+              "type": "dateTime",
+              "readOnly": false,
+              "removed": false
+            },
+            {
+              "id": "Errores relacionados",
+              "displayName": "Errores relacionados",
+              "required": false,
+              "defaultMatch": false,
+              "canBeUsedToMatch": true,
+              "display": true,
+              "type": "array",
+              "readOnly": false,
+              "removed": false
+            },
+            {
+              "id": "Consulta",
+              "displayName": "Consulta",
+              "required": false,
+              "defaultMatch": false,
+              "canBeUsedToMatch": true,
+              "display": true,
+              "type": "string",
+              "readOnly": false,
+              "removed": false
+            },
+            {
+              "id": "Respuesta_Final",
+              "displayName": "Respuesta_Final",
+              "required": false,
+              "defaultMatch": false,
+              "canBeUsedToMatch": true,
+              "display": true,
+              "type": "string",
+              "readOnly": false,
+              "removed": false
+            }
+          ],
+          "attemptToConvertTypes": false,
+          "convertFieldsToString": false
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.airtable",
+      "typeVersion": 2.2,
+      "position": [
+        2368,
+        -352
+      ],
+      "id": "7beeb0c1-91b7-4b6b-bead-b2169ea457c3",
+      "name": "Actualizar Respuesta Final (Humano)",
+      "credentials": {
+        "airtableOAuth2Api": {
+          "id": "0vTgEBN0LH1B8Abm",
+          "name": "Airtable account"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "authentication": "airtableOAuth2Api",
+        "operation": "update",
+        "base": {
+          "__rl": true,
+          "value": "appFV3yWXdbnGtFol",
+          "mode": "list",
+          "cachedResultName": "Sistema Info Carreras",
+          "cachedResultUrl": "https://airtable.com/appFV3yWXdbnGtFol"
+        },
+        "table": {
+          "__rl": true,
+          "value": "tblclqDTUXJ7KiJFC",
+          "mode": "list",
+          "cachedResultName": "Solicitudes",
+          "cachedResultUrl": "https://airtable.com/appFV3yWXdbnGtFol/tblclqDTUXJ7KiJFC"
+        },
+        "columns": {
+          "mappingMode": "defineBelow",
+          "value": {
+            "Estado": "Aprobado",
+            "id": "={{ $('Crear Solicitud').item.json.id }}"
+          },
+          "matchingColumns": [
+            "id"
+          ],
+          "schema": [
+            {
+              "id": "id",
+              "displayName": "id",
+              "required": false,
+              "defaultMatch": true,
+              "display": true,
+              "type": "string",
+              "readOnly": true,
+              "removed": false
+            },
+            {
+              "id": "Solicitud_ID",
+              "displayName": "Solicitud_ID",
+              "required": false,
+              "defaultMatch": false,
+              "canBeUsedToMatch": true,
+              "display": true,
+              "type": "string",
+              "readOnly": true,
+              "removed": true
+            },
+            {
+              "id": "Nombre_Estudiante",
+              "displayName": "Nombre_Estudiante",
+              "required": false,
+              "defaultMatch": false,
+              "canBeUsedToMatch": true,
+              "display": true,
+              "type": "string",
+              "readOnly": false,
+              "removed": false
+            },
+            {
+              "id": "Email_Estudiante",
+              "displayName": "Email_Estudiante",
+              "required": false,
+              "defaultMatch": false,
+              "canBeUsedToMatch": true,
+              "display": true,
+              "type": "string",
+              "readOnly": false,
+              "removed": false
+            },
+            {
+              "id": "Carrera",
+              "displayName": "Carrera",
+              "required": false,
+              "defaultMatch": false,
+              "canBeUsedToMatch": true,
+              "display": true,
+              "type": "array",
+              "readOnly": false,
+              "removed": false
+            },
+            {
+              "id": "Pregunta",
+              "displayName": "Pregunta",
+              "required": false,
+              "defaultMatch": false,
+              "canBeUsedToMatch": true,
+              "display": true,
+              "type": "string",
+              "readOnly": false,
+              "removed": false
+            },
+            {
+              "id": "Estado",
+              "displayName": "Estado",
+              "required": false,
+              "defaultMatch": false,
+              "canBeUsedToMatch": true,
+              "display": true,
+              "type": "options",
+              "options": [
+                {
+                  "name": "Pendiente",
+                  "value": "Pendiente"
+                },
+                {
+                  "name": "Procesado por IA",
+                  "value": "Procesado por IA"
+                },
+                {
+                  "name": "Esperando Aprobación",
+                  "value": "Esperando Aprobación"
+                },
+                {
+                  "name": "Aprobado",
+                  "value": "Aprobado"
+                },
+                {
+                  "name": "Rechazado",
+                  "value": "Rechazado"
+                },
+                {
+                  "name": "Enviado",
+                  "value": "Enviado"
+                },
+                {
+                  "name": "Error",
+                  "value": "Error"
+                },
+                {
+                  "name": "Respondida",
+                  "value": "Respondida"
+                }
+              ],
+              "readOnly": false,
+              "removed": false
+            },
+            {
+              "id": "Respuesta_IA",
+              "displayName": "Respuesta_IA",
+              "required": false,
+              "defaultMatch": false,
+              "canBeUsedToMatch": true,
+              "display": true,
+              "type": "string",
+              "readOnly": false,
+              "removed": false
+            },
+            {
+              "id": "Aprobado_Por",
+              "displayName": "Aprobado_Por",
+              "required": false,
+              "defaultMatch": false,
+              "canBeUsedToMatch": true,
+              "display": true,
+              "type": "string",
+              "readOnly": false,
+              "removed": false
+            },
+            {
+              "id": "Fecha_Solicitud",
+              "displayName": "Fecha_Solicitud",
+              "required": false,
+              "defaultMatch": false,
+              "canBeUsedToMatch": true,
+              "display": true,
+              "type": "string",
+              "readOnly": true,
+              "removed": true
+            },
+            {
+              "id": "Fecha_Envio",
+              "displayName": "Fecha_Envio",
+              "required": false,
+              "defaultMatch": false,
+              "canBeUsedToMatch": true,
+              "display": true,
+              "type": "dateTime",
+              "readOnly": false,
+              "removed": false
+            },
+            {
+              "id": "Errores relacionados",
+              "displayName": "Errores relacionados",
+              "required": false,
+              "defaultMatch": false,
+              "canBeUsedToMatch": true,
+              "display": true,
+              "type": "array",
+              "readOnly": false,
+              "removed": false
+            },
+            {
+              "id": "Consulta",
+              "displayName": "Consulta",
+              "required": false,
+              "defaultMatch": false,
+              "canBeUsedToMatch": true,
+              "display": true,
+              "type": "string",
+              "readOnly": false,
+              "removed": false
+            },
+            {
+              "id": "Respuesta_Final",
+              "displayName": "Respuesta_Final",
+              "required": false,
+              "defaultMatch": false,
+              "canBeUsedToMatch": true,
+              "display": true,
+              "type": "string",
+              "readOnly": false,
+              "removed": false
+            }
+          ],
+          "attemptToConvertTypes": false,
+          "convertFieldsToString": false
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.airtable",
+      "typeVersion": 2.2,
+      "position": [
+        2144,
+        -64
+      ],
+      "id": "e3ea2f83-23fe-4eaf-a74e-29d98c84e3a4",
+      "name": "Update record",
+      "credentials": {
+        "airtableOAuth2Api": {
+          "id": "0vTgEBN0LH1B8Abm",
+          "name": "Airtable account"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "sendTo": "=  {{ $('Normalizar datos').item.json.email }}",
+        "subject": "=  Información sobre {{ $('Buscar Carrera').item.json.fields.Nombre }}",
+        "message": "=  {{ $json.fields.Respuesta_Final ? $json.fields.Respuesta_Final : $('Actualizar Solicitud con IA').item.json.fields.Respuesta_IA }}",
+        "options": {}
+      },
+      "type": "n8n-nodes-base.gmail",
+      "typeVersion": 2.2,
+      "position": [
+        2368,
+        -64
+      ],
+      "id": "c0216bbd-6f23-4fba-812d-767a69623f3f",
+      "name": "Send a message",
+      "webhookId": "75631627-9edc-461d-90f9-2eda524a9e1d",
+      "credentials": {
+        "gmailOAuth2": {
+          "id": "OFHDkv7brEmN6Kte",
+          "name": "Gmail account"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "modelId": {
+          "__rl": true,
+          "value": "models/gemini-3.5-flash",
+          "mode": "list",
+          "cachedResultName": "models/gemini-3.5-flash"
+        },
+        "messages": {
+          "values": [
+            {
+              "content": "   Sos un asistente de la oficina de admisiones de una universidad. Tu tarea es redactar un correo breve, cálido y profesional en español para un estudiante que solicitó información sobre una carrera. Usá SOLO los datos provistos, no inventes información que no esté en el contexto. El correo debe tener: saludo personalizado, 2-3 párrafos con la información de la carrera, y un cierre invitando a responder dudas. No incluyas asunto ni firma, solo el cuerpo del mensaje.",
+              "role": "model"
+            },
+            {
+              "content": "=  Nombre del estudiante: {{ $('Normalizar datos').item.json.nombre }}\n\nDatos de la carrera:\n- Nombre: {{ $('Buscar Carrera').item.json.fields.Nombre }}\n- Descripción: {{ $('Buscar Carrera').item.json.fields.Descripcion }}\n- Duración: {{ $('Buscar Carrera').item.json.fields.Duracion }}\n- Modalidad: {{ $('Buscar Carrera').item.json.fields.Modalidad }}\n- Requisitos de ingreso: {{ $('Buscar Carrera').item.json.fields.Requisitos }}\n- Asignaturas por año: {{ $('Buscar Carrera').item.json.fields['Asignaturas por Año'] }}\n- Resolución: {{ $('Buscar Carrera').item.json.fields.Resolucion }}\n\nRedactá el correo con esta información."
+            }
+          ]
+        },
+        "builtInTools": {},
+        "options": {}
+      },
+      "type": "@n8n/n8n-nodes-langchain.googleGemini",
+      "typeVersion": 1.2,
+      "position": [
+        1344,
+        -192
+      ],
+      "id": "d40f975d-ab2c-4a8d-8680-565bbacd9d66",
+      "name": "Generar Respuesta IA",
+      "credentials": {
+        "googlePalmApi": {
+          "id": "pDWUouQAsx0VoMRr",
+          "name": "Google Gemini(PaLM) Api account"
+        }
+      },
+      "onError": "continueErrorOutput"
+    },
+    {
+      "parameters": {
+        "authentication": "airtableOAuth2Api",
+        "operation": "create",
+        "base": {
+          "__rl": true,
+          "value": "appFV3yWXdbnGtFol",
+          "mode": "list",
+          "cachedResultName": "Sistema Info Carreras",
+          "cachedResultUrl": "https://airtable.com/appFV3yWXdbnGtFol"
+        },
+        "table": {
+          "__rl": true,
+          "value": "tblssp4DOtefeJNBM",
+          "mode": "list",
+          "cachedResultName": "Errores",
+          "cachedResultUrl": "https://airtable.com/appFV3yWXdbnGtFol/tblssp4DOtefeJNBM"
+        },
+        "columns": {
+          "mappingMode": "defineBelow",
+          "value": {
+            "Tipo_Error": "Falla API IA",
+            "Solicitud": "={{ [$('Crear Solicitud').item.json.id] }}",
+            "Mensaje": "={{ $json.error.message }}"
+          },
+          "matchingColumns": [],
+          "schema": [
+            {
+              "id": "Error_ID",
+              "displayName": "Error_ID",
+              "required": false,
+              "defaultMatch": false,
+              "canBeUsedToMatch": true,
+              "display": true,
+              "type": "string",
+              "readOnly": true,
+              "removed": true
+            },
+            {
+              "id": "Solicitud",
+              "displayName": "Solicitud",
+              "required": false,
+              "defaultMatch": false,
+              "canBeUsedToMatch": true,
+              "display": true,
+              "type": "array",
+              "readOnly": false,
+              "removed": false
+            },
+            {
+              "id": "Tipo_Error",
+              "displayName": "Tipo_Error",
+              "required": false,
+              "defaultMatch": false,
+              "canBeUsedToMatch": true,
+              "display": true,
+              "type": "options",
+              "options": [
+                {
+                  "name": "Datos faltantes",
+                  "value": "Datos faltantes"
+                },
+                {
+                  "name": "Carrera no encontrada",
+                  "value": "Carrera no encontrada"
+                },
+                {
+                  "name": "Falla API IA",
+                  "value": "Falla API IA"
+                },
+                {
+                  "name": "Falla envío Gmail",
+                  "value": "Falla envío Gmail"
+                },
+                {
+                  "name": "Validación",
+                  "value": "Validación"
+                },
+                {
+                  "name": "Autenticación",
+                  "value": "Autenticación"
+                },
+                {
+                  "name": "Base de datos",
+                  "value": "Base de datos"
+                },
+                {
+                  "name": "Permisos",
+                  "value": "Permisos"
+                },
+                {
+                  "name": "Red",
+                  "value": "Red"
+                }
+              ],
+              "readOnly": false,
+              "removed": false
+            },
+            {
+              "id": "Mensaje",
+              "displayName": "Mensaje",
+              "required": false,
+              "defaultMatch": false,
+              "canBeUsedToMatch": true,
+              "display": true,
+              "type": "string",
+              "readOnly": false,
+              "removed": false
+            },
+            {
+              "id": "Fecha",
+              "displayName": "Fecha",
+              "required": false,
+              "defaultMatch": false,
+              "canBeUsedToMatch": true,
+              "display": true,
+              "type": "string",
+              "readOnly": true,
+              "removed": true
+            }
+          ],
+          "attemptToConvertTypes": false,
+          "convertFieldsToString": false
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.airtable",
+      "typeVersion": 2.2,
+      "position": [
+        1664,
+        -16
+      ],
+      "id": "f4807073-78ee-4d76-b81b-1a1671bd543e",
+      "name": "Registrar Error IA",
+      "credentials": {
+        "airtableOAuth2Api": {
+          "id": "0vTgEBN0LH1B8Abm",
+          "name": "Airtable account"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "authentication": "airtableOAuth2Api",
+        "operation": "update",
+        "base": {
+          "__rl": true,
+          "value": "appFV3yWXdbnGtFol",
+          "mode": "list",
+          "cachedResultName": "Sistema Info Carreras",
+          "cachedResultUrl": "https://airtable.com/appFV3yWXdbnGtFol"
+        },
+        "table": {
+          "__rl": true,
+          "value": "tblclqDTUXJ7KiJFC",
+          "mode": "list",
+          "cachedResultName": "Solicitudes",
+          "cachedResultUrl": "https://airtable.com/appFV3yWXdbnGtFol/tblclqDTUXJ7KiJFC"
+        },
+        "columns": {
+          "mappingMode": "defineBelow",
+          "value": {
+            "id": "={{ $('Crear Solicitud').item.json.id }}",
+            "Estado": "Error"
+          },
+          "matchingColumns": [
+            "id"
+          ],
+          "schema": [
+            {
+              "id": "id",
+              "displayName": "id",
+              "required": false,
+              "defaultMatch": true,
+              "display": true,
+              "type": "string",
+              "readOnly": true,
+              "removed": false
+            },
+            {
+              "id": "Solicitud_ID",
+              "displayName": "Solicitud_ID",
+              "required": false,
+              "defaultMatch": false,
+              "canBeUsedToMatch": true,
+              "display": true,
+              "type": "string",
+              "readOnly": true,
+              "removed": true
+            },
+            {
+              "id": "Nombre_Estudiante",
+              "displayName": "Nombre_Estudiante",
+              "required": false,
+              "defaultMatch": false,
+              "canBeUsedToMatch": true,
+              "display": true,
+              "type": "string",
+              "readOnly": false,
+              "removed": false
+            },
+            {
+              "id": "Email_Estudiante",
+              "displayName": "Email_Estudiante",
+              "required": false,
+              "defaultMatch": false,
+              "canBeUsedToMatch": true,
+              "display": true,
+              "type": "string",
+              "readOnly": false,
+              "removed": false
+            },
+            {
+              "id": "Carrera",
+              "displayName": "Carrera",
+              "required": false,
+              "defaultMatch": false,
+              "canBeUsedToMatch": true,
+              "display": true,
+              "type": "array",
+              "readOnly": false,
+              "removed": false
+            },
+            {
+              "id": "Pregunta",
+              "displayName": "Pregunta",
+              "required": false,
+              "defaultMatch": false,
+              "canBeUsedToMatch": true,
+              "display": true,
+              "type": "string",
+              "readOnly": false,
+              "removed": false
+            },
+            {
+              "id": "Estado",
+              "displayName": "Estado",
+              "required": false,
+              "defaultMatch": false,
+              "canBeUsedToMatch": true,
+              "display": true,
+              "type": "options",
+              "options": [
+                {
+                  "name": "Pendiente",
+                  "value": "Pendiente"
+                },
+                {
+                  "name": "Procesado por IA",
+                  "value": "Procesado por IA"
+                },
+                {
+                  "name": "Esperando Aprobación",
+                  "value": "Esperando Aprobación"
+                },
+                {
+                  "name": "Aprobado",
+                  "value": "Aprobado"
+                },
+                {
+                  "name": "Rechazado",
+                  "value": "Rechazado"
+                },
+                {
+                  "name": "Enviado",
+                  "value": "Enviado"
+                },
+                {
+                  "name": "Error",
+                  "value": "Error"
+                },
+                {
+                  "name": "Respondida",
+                  "value": "Respondida"
+                }
+              ],
+              "readOnly": false,
+              "removed": false
+            },
+            {
+              "id": "Respuesta_IA",
+              "displayName": "Respuesta_IA",
+              "required": false,
+              "defaultMatch": false,
+              "canBeUsedToMatch": true,
+              "display": true,
+              "type": "string",
+              "readOnly": false,
+              "removed": false
+            },
+            {
+              "id": "Aprobado_Por",
+              "displayName": "Aprobado_Por",
+              "required": false,
+              "defaultMatch": false,
+              "canBeUsedToMatch": true,
+              "display": true,
+              "type": "string",
+              "readOnly": false,
+              "removed": false
+            },
+            {
+              "id": "Fecha_Solicitud",
+              "displayName": "Fecha_Solicitud",
+              "required": false,
+              "defaultMatch": false,
+              "canBeUsedToMatch": true,
+              "display": true,
+              "type": "string",
+              "readOnly": true,
+              "removed": true
+            },
+            {
+              "id": "Fecha_Envio",
+              "displayName": "Fecha_Envio",
+              "required": false,
+              "defaultMatch": false,
+              "canBeUsedToMatch": true,
+              "display": true,
+              "type": "dateTime",
+              "readOnly": false,
+              "removed": false
+            },
+            {
+              "id": "Errores relacionados",
+              "displayName": "Errores relacionados",
+              "required": false,
+              "defaultMatch": false,
+              "canBeUsedToMatch": true,
+              "display": true,
+              "type": "array",
+              "readOnly": false,
+              "removed": false
+            },
+            {
+              "id": "Consulta",
+              "displayName": "Consulta",
+              "required": false,
+              "defaultMatch": false,
+              "canBeUsedToMatch": true,
+              "display": true,
+              "type": "string",
+              "readOnly": false,
+              "removed": false
+            },
+            {
+              "id": "Respuesta_Final",
+              "displayName": "Respuesta_Final",
+              "required": false,
+              "defaultMatch": false,
+              "canBeUsedToMatch": true,
+              "display": true,
+              "type": "string",
+              "readOnly": false,
+              "removed": false
+            }
+          ],
+          "attemptToConvertTypes": false,
+          "convertFieldsToString": false
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.airtable",
+      "typeVersion": 2.2,
+      "position": [
+        1920,
+        64
+      ],
+      "id": "f60ce879-fa0c-4592-b9c4-8be3cda007ea",
+      "name": "Registrar Error en Solicitud",
+      "credentials": {
+        "airtableOAuth2Api": {
+          "id": "0vTgEBN0LH1B8Abm",
+          "name": "Airtable account"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "authentication": "airtableOAuth2Api",
+        "operation": "update",
+        "base": {
+          "__rl": true,
+          "value": "appFV3yWXdbnGtFol",
+          "mode": "list",
+          "cachedResultName": "Sistema Info Carreras",
+          "cachedResultUrl": "https://airtable.com/appFV3yWXdbnGtFol"
+        },
+        "table": {
+          "__rl": true,
+          "value": "tblclqDTUXJ7KiJFC",
+          "mode": "list",
+          "cachedResultName": "Solicitudes",
+          "cachedResultUrl": "https://airtable.com/appFV3yWXdbnGtFol/tblclqDTUXJ7KiJFC"
+        },
+        "columns": {
+          "mappingMode": "defineBelow",
+          "value": {
+            "Estado": "Enviado",
+            "id": "={{ $('Crear Solicitud').item.json.id }}",
+            "Fecha_Envio": "={{ $now }}"
+          },
+          "matchingColumns": [
+            "id"
+          ],
+          "schema": [
+            {
+              "id": "id",
+              "displayName": "id",
+              "required": false,
+              "defaultMatch": true,
+              "display": true,
+              "type": "string",
+              "readOnly": true,
+              "removed": false
+            },
+            {
+              "id": "Solicitud_ID",
+              "displayName": "Solicitud_ID",
+              "required": false,
+              "defaultMatch": false,
+              "canBeUsedToMatch": true,
+              "display": true,
+              "type": "string",
+              "readOnly": true,
+              "removed": true
+            },
+            {
+              "id": "Nombre_Estudiante",
+              "displayName": "Nombre_Estudiante",
+              "required": false,
+              "defaultMatch": false,
+              "canBeUsedToMatch": true,
+              "display": true,
+              "type": "string",
+              "readOnly": false,
+              "removed": false
+            },
+            {
+              "id": "Email_Estudiante",
+              "displayName": "Email_Estudiante",
+              "required": false,
+              "defaultMatch": false,
+              "canBeUsedToMatch": true,
+              "display": true,
+              "type": "string",
+              "readOnly": false,
+              "removed": false
+            },
+            {
+              "id": "Carrera",
+              "displayName": "Carrera",
+              "required": false,
+              "defaultMatch": false,
+              "canBeUsedToMatch": true,
+              "display": true,
+              "type": "array",
+              "readOnly": false,
+              "removed": false
+            },
+            {
+              "id": "Pregunta",
+              "displayName": "Pregunta",
+              "required": false,
+              "defaultMatch": false,
+              "canBeUsedToMatch": true,
+              "display": true,
+              "type": "string",
+              "readOnly": false,
+              "removed": false
+            },
+            {
+              "id": "Estado",
+              "displayName": "Estado",
+              "required": false,
+              "defaultMatch": false,
+              "canBeUsedToMatch": true,
+              "display": true,
+              "type": "options",
+              "options": [
+                {
+                  "name": "Pendiente",
+                  "value": "Pendiente"
+                },
+                {
+                  "name": "Procesado por IA",
+                  "value": "Procesado por IA"
+                },
+                {
+                  "name": "Esperando Aprobación",
+                  "value": "Esperando Aprobación"
+                },
+                {
+                  "name": "Aprobado",
+                  "value": "Aprobado"
+                },
+                {
+                  "name": "Rechazado",
+                  "value": "Rechazado"
+                },
+                {
+                  "name": "Enviado",
+                  "value": "Enviado"
+                },
+                {
+                  "name": "Error",
+                  "value": "Error"
+                },
+                {
+                  "name": "Respondida",
+                  "value": "Respondida"
+                }
+              ],
+              "readOnly": false,
+              "removed": false
+            },
+            {
+              "id": "Respuesta_IA",
+              "displayName": "Respuesta_IA",
+              "required": false,
+              "defaultMatch": false,
+              "canBeUsedToMatch": true,
+              "display": true,
+              "type": "string",
+              "readOnly": false,
+              "removed": false
+            },
+            {
+              "id": "Aprobado_Por",
+              "displayName": "Aprobado_Por",
+              "required": false,
+              "defaultMatch": false,
+              "canBeUsedToMatch": true,
+              "display": true,
+              "type": "string",
+              "readOnly": false,
+              "removed": false
+            },
+            {
+              "id": "Fecha_Solicitud",
+              "displayName": "Fecha_Solicitud",
+              "required": false,
+              "defaultMatch": false,
+              "canBeUsedToMatch": true,
+              "display": true,
+              "type": "string",
+              "readOnly": true,
+              "removed": true
+            },
+            {
+              "id": "Fecha_Envio",
+              "displayName": "Fecha_Envio",
+              "required": false,
+              "defaultMatch": false,
+              "canBeUsedToMatch": true,
+              "display": true,
+              "type": "dateTime",
+              "readOnly": false,
+              "removed": false
+            },
+            {
+              "id": "Errores relacionados",
+              "displayName": "Errores relacionados",
+              "required": false,
+              "defaultMatch": false,
+              "canBeUsedToMatch": true,
+              "display": true,
+              "type": "array",
+              "readOnly": false,
+              "removed": false
+            },
+            {
+              "id": "Consulta",
+              "displayName": "Consulta",
+              "required": false,
+              "defaultMatch": false,
+              "canBeUsedToMatch": true,
+              "display": true,
+              "type": "string",
+              "readOnly": false,
+              "removed": false
+            },
+            {
+              "id": "Respuesta_Final",
+              "displayName": "Respuesta_Final",
+              "required": false,
+              "defaultMatch": false,
+              "canBeUsedToMatch": true,
+              "display": true,
+              "type": "string",
+              "readOnly": false,
+              "removed": false
+            }
+          ],
+          "attemptToConvertTypes": false,
+          "convertFieldsToString": false
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.airtable",
+      "typeVersion": 2.2,
+      "position": [
+        2592,
+        -64
+      ],
+      "id": "4b3e7109-77d1-4653-bfcd-9475b558fc1f",
+      "name": "Update record1",
+      "credentials": {
+        "airtableOAuth2Api": {
+          "id": "0vTgEBN0LH1B8Abm",
+          "name": "Airtable account"
+        }
+      }
+    }
+  ],
+  "pinData": {},
+  "connections": {
+    "Google Sheets Trigger": {
+      "main": [
+        [
+          {
+            "node": "Normalizar datos",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "If": {
+      "main": [
+        [
+          {
+            "node": "Buscar Carrera",
+            "type": "main",
+            "index": 0
+          }
+        ],
+        [
+          {
+            "node": "Revisar Error Datos",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "If1": {
+      "main": [
+        [
+          {
+            "node": "Crear Solicitud",
+            "type": "main",
+            "index": 0
+          }
+        ],
+        [
+          {
+            "node": "Registrar Error",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Normalizar datos": {
+      "main": [
+        [
+          {
+            "node": "If",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Buscar Carrera": {
+      "main": [
+        [
+          {
+            "node": "If1",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Crear Solicitud": {
+      "main": [
+        [
+          {
+            "node": "Generar Respuesta IA",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "¿Requiere Revisión Humana?": {
+      "main": [
+        [
+          {
+            "node": "Aprobacion Asesor",
+            "type": "main",
+            "index": 0
+          }
+        ],
+        [
+          {
+            "node": "Update record",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Actualizar Solicitud con IA": {
+      "main": [
+        [
+          {
+            "node": "¿Requiere Revisión Humana?",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Aprobacion Asesor": {
+      "main": [
+        [
+          {
+            "node": "Actualizar Respuesta Final (Humano)",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Update record": {
+      "main": [
+        [
+          {
+            "node": "Send a message",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Actualizar Respuesta Final (Humano)": {
+      "main": [
+        [
+          {
+            "node": "Send a message",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Generar Respuesta IA": {
+      "main": [
+        [
+          {
+            "node": "Actualizar Solicitud con IA",
+            "type": "main",
+            "index": 0
+          }
+        ],
+        [
+          {
+            "node": "Registrar Error IA",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Registrar Error IA": {
+      "main": [
+        [
+          {
+            "node": "Registrar Error en Solicitud",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Send a message": {
+      "main": [
+        [
+          {
+            "node": "Update record1",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    }
+  },
+  "active": false,
+  "settings": {
+    "executionOrder": "v1",
+    "binaryMode": "separate"
+  },
+  "versionId": "1f015401-e20f-4d54-ad23-852ed64b138e",
+  "meta": {
+    "templateCredsSetupCompleted": true,
+    "instanceId": "e40efffa0956e90b1a061a1db7f50a9e7cf76cb1b8bb6a07d2abddeb9b4c2d40"
+  },
+  "nodeGroups": [],
+  "id": "50CSWyyDmPkkoJ76",
+  "tags": []
+}
