@@ -9,7 +9,7 @@ Ecosistema de Automatización IA — Trabajo final.
 
 - 🔗 Base de datos (Airtable, modo lectura):https://airtable.com/invite/l?inviteId=inv69D8Sk8WZW8Jdd&inviteToken=29fd03c97e23f47fb8f57750e19e415ec572aeada1fe84a40d34bdd0fd74a3b0&utm_medium=email&utm_source=product_team&utm_content=transactional-alerts]
 - 📊 Dashboard de control (Airtable Shared View): https://airtable.com/invite/l?inviteId=inv69D8Sk8WZW8Jdd&inviteToken=29fd03c97e23f47fb8f57750e19e415ec572aeada1fe84a40d34bdd0fd74a3b0&utm_medium=email&utm_source=product_team&utm_content=transactional-alerts)
-- Demo Youtube: https://youtu.be/Tc1WAdd7SAY
+- Demo Youtube: https://youtu.be/-Bz6T3pgX0E
 
 ## Contenido del repositorio
 
